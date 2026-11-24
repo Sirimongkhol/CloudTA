@@ -31,7 +31,7 @@
       margin-bottom: 6px;
       color: #333;
     }
-    input {
+    input, select {
       width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
@@ -60,6 +60,16 @@
   <div class="form-card">
     <form id="labForm">
       <div class="form-group">
+        <label for="sec">Section</label>
+        <select id="sec" required>
+          <option value="" disabled selected>-- เลือก Section --</option>
+          <option value="CY Sec1">CY Sec1</option>
+          <option value="AI Sec1">AI Sec1</option>
+          <!-- เพิ่ม Sec อื่นๆ ตรงนี้ได้เลย -->
+        </select>
+      </div>
+
+      <div class="form-group">
         <label for="weekLab">Week Lab</label>
         <input type="text" id="weekLab" placeholder="เช่น Week 1" required>
       </div>
@@ -74,7 +84,7 @@
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx4T2BJTeelgrt_JxSpGBaahMDnBKuZ1KwOb5o8sLxXQzXO89xASnvoWEvnrlUDoO5x/exec'; // <--- วาง Web App URL ที่ได้จาก Apps Script ตรงนี้
+    const SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE'; // <--- วาง Web App URL ตัวใหม่ตรงนี้
 
     const form = document.getElementById('labForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -86,6 +96,7 @@
       submitBtn.textContent = 'กำลังส่งข้อมูล...';
 
       const formData = {
+        sec: document.getElementById('sec').value,
         weekLab: document.getElementById('weekLab').value,
         studentId: document.getElementById('studentId').value
       };
@@ -93,7 +104,7 @@
       try {
         await fetch(SCRIPT_URL, {
           method: 'POST',
-          mode: 'no-cors', // ป้องกันการติดปัญหา CORS
+          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/json'
           },
